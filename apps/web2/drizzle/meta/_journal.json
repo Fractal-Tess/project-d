@@ -1,0 +1,13 @@
+{
+  "version": "6",
+  "dialect": "sqlite",
+  "entries": [
+    {
+      "idx": 0,
+      "version": "6",
+      "when": 1718234996261,
+      "tag": "0000_graceful_norman_osborn",
+      "breakpoints": true
+    }
+  ]
+}
