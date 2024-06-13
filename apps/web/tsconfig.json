@@ -13,7 +13,7 @@
     ]
   },
   "include": [
-    "../../packages/eslint-config/.eslintrc.cjs",
+    ".eslintrc.cjs",
     "../../packages/ui/**/*.tsx",
     "../../packages/ui/**/*.ts",
     "next-env.d.ts",

@@ -11,26 +11,23 @@ module.exports = {
     'turbo',
     'next/core-web-vitals',
     'plugin:@typescript-eslint/recommended-type-checked',
-    'plugin:@typescript-eslint/stylistic-type-checked',
+    'plugin:@typescript-eslint/stylistic-type-checked'
   ],
-  parserOptions: {
-    project: true,
-  },
   globals: {
     React: true,
-    JSX: true,
+    JSX: true
   },
   env: {
     node: true,
-    browser: true,
+    browser: true
   },
   plugins: ['@typescript-eslint', 'drizzle'],
   settings: {
     'import/resolver': {
       typescript: {
-        project,
-      },
-    },
+        project
+      }
+    }
   },
   ignorePatterns: ['.*.js', 'node_modules/'],
   overrides: [{ files: ['*.js?(x)', '*.ts?(x)'] }],
@@ -41,35 +38,35 @@ module.exports = {
       'warn',
       {
         prefer: 'type-imports',
-        fixStyle: 'inline-type-imports',
-      },
+        fixStyle: 'inline-type-imports'
+      }
     ],
     '@typescript-eslint/no-unused-vars': [
       'warn',
       {
-        argsIgnorePattern: '^_',
-      },
+        argsIgnorePattern: '^_'
+      }
     ],
     '@typescript-eslint/require-await': 'off',
     '@typescript-eslint/no-misused-promises': [
       'error',
       {
         checksVoidReturn: {
-          attributes: false,
-        },
-      },
+          attributes: false
+        }
+      }
     ],
     'drizzle/enforce-delete-with-where': [
       'error',
       {
-        drizzleObjectName: ['db', 'ctx.db'],
-      },
+        drizzleObjectName: ['db', 'ctx.db']
+      }
     ],
     'drizzle/enforce-update-with-where': [
       'error',
       {
-        drizzleObjectName: ['db', 'ctx.db'],
-      },
-    ],
-  },
+        drizzleObjectName: ['db', 'ctx.db']
+      }
+    ]
+  }
 };

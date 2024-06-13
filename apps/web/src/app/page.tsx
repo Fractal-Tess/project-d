@@ -11,7 +11,16 @@ export default async function Home() {
 
   return (
     <main className="dev container mx-auto flex min-h-screen flex-col items-center justify-center gap-y-12 bg-slate-700 text-white">
-      <h1>Hello {session?.user.name} &lt;3</h1>
+      <h1>
+        Hello {session?.user.name}{' '}
+        {session && (
+          <img
+            src={session.user.image ?? ''}
+            className="m-4 inline-block rounded-full shadow-lg"
+          ></img>
+        )}{' '}
+        &lt;3
+      </h1>
 
       <h1>Hello world</h1>
       <Button>Hello world</Button>
