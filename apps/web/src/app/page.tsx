@@ -12,6 +12,7 @@ export default async function Home() {
   return (
     <main className="container mx-auto flex min-h-screen flex-col items-center justify-center gap-y-12 bg-slate-700 text-white">
       <h1>
+        {/* Using session */}
         Hello {session?.user.name}{' '}
         {session && (
           <img
@@ -22,8 +23,13 @@ export default async function Home() {
         &lt;3
       </h1>
 
-      <h1>Hello world</h1>
+      {/* Data coming from tRPC backend */}
+      <h1>{hello.greeting}</h1>
+
+      {/* Component used from UI lib */}
       <Button>Hello world</Button>
+
+      {/* Sign in link */}
       <Link
         href={session ? '/api/auth/signout' : '/api/auth/signin'}
         className="rounded-full bg-white/10 px-10 py-3 font-semibold no-underline transition hover:bg-white/20"
@@ -31,6 +37,7 @@ export default async function Home() {
         {session ? 'Sign out' : 'Sign in'}
       </Link>
 
+      {/* Showcasing crud */}
       <CrudShowcase />
     </main>
   );
@@ -40,15 +47,20 @@ async function CrudShowcase() {
   const session = await getServerAuthSession();
   if (!session?.user) return null;
 
-  const latestPost = await api.post.getLatest();
+  const latestPosts = await api.post.getLatest();
 
   return (
-    <div className="w-full max-w-xs">
-      {latestPost ? (
-        <p className="truncate">Your most recent post: {latestPost.name}</p>
-      ) : (
-        <p>You have no posts yet.</p>
-      )}
+    <div className="flex w-full max-w-xs flex-col gap-y-4 rounded-sm">
+      <ul className="flex flex-col gap-y-4 rounded-md">
+        {latestPosts.map(({ name }, idx) => (
+          <li
+            key={idx}
+            className="text-bold truncate rounded-md border-2 text-2xl shadow-md"
+          >
+            {name}
+          </li>
+        ))}
+      </ul>
 
       <CreatePost />
     </div>
