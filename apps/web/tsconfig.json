@@ -3,6 +3,7 @@
   "compilerOptions": {
     "baseUrl": ".",
     "paths": {
+      "@ui/*": ["../../packages/ui/src/*"],
       "$/*": ["./src/*"]
     },
     "plugins": [
@@ -13,12 +14,15 @@
   },
   "include": [
     "../../packages/eslint-config/.eslintrc.cjs",
+    "../../packages/ui/**/*.tsx",
+    "../../packages/ui/**/*.ts",
     "next-env.d.ts",
     "**/*.ts",
     "**/*.tsx",
     "**/*.cjs",
     "**/*.js",
-    ".next/types/**/*.ts"
-, "../../prettier.config.js"  ],
+    ".next/types/**/*.ts",
+    "../../prettier.config.js"
+  ],
   "exclude": ["node_modules"]
 }

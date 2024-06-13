@@ -8,7 +8,11 @@
     "plugins": [{ "name": "next" }],
     "module": "ESNext",
     "moduleResolution": "Bundler",
-    "allowJs": true
+    "allowJs": true,
+    "paths": {
+      "@ui/*": ["../../packages/ui/src/*"],
+      "$/*": ["./src/*"]
+    }
   },
   "include": [
     "next-env.d.ts",

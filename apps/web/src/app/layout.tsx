@@ -1,5 +1,4 @@
-import '$/styles/globals.css';
-
+import '@repo/ui/globals.css';
 import { GeistSans } from 'geist/font/sans';
 
 import { TRPCReactProvider } from '$/trpc/react';
