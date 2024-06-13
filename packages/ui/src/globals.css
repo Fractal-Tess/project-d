@@ -73,4 +73,8 @@
   body {
     @apply bg-background text-foreground;
   }
+
+  .dev {
+    @apply border-2 border-red-500;
+  }
 }
