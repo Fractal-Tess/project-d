@@ -8,6 +8,20 @@
       "when": 1718272181165,
       "tag": "0000_daily_gamora",
       "breakpoints": true
+    },
+    {
+      "idx": 1,
+      "version": "6",
+      "when": 1718291010188,
+      "tag": "0001_nasty_human_torch",
+      "breakpoints": true
+    },
+    {
+      "idx": 2,
+      "version": "6",
+      "when": 1718293117634,
+      "tag": "0002_dusty_solo",
+      "breakpoints": true
     }
   ]
 }

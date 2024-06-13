@@ -60,7 +60,11 @@ export const accounts = createTable(
     type: text('type', { length: 255 })
       .$type<AdapterAccount['type']>()
       .notNull(),
-    provider: text('provider', { length: 255 }).notNull(),
+    provider: text('provider', {
+      length: 255,
+      enum: ['discord', 'credentials']
+    }).notNull(),
+    password: text('password', { length: 255 }),
     providerAccountId: text('providerAccountId', { length: 255 }).notNull(),
     refresh_token: text('refresh_token'),
     access_token: text('access_token'),
