@@ -10,7 +10,7 @@ export default async function Home() {
   const session = await getServerAuthSession();
 
   return (
-    <main className="dev container mx-auto flex min-h-screen flex-col items-center justify-center gap-y-12 bg-slate-700 text-white">
+    <main className="container mx-auto flex min-h-screen flex-col items-center justify-center gap-y-12 bg-slate-700 text-white">
       <h1>
         Hello {session?.user.name}{' '}
         {session && (
@@ -30,6 +30,8 @@ export default async function Home() {
       >
         {session ? 'Sign out' : 'Sign in'}
       </Link>
+
+      <CrudShowcase />
     </main>
   );
 }
