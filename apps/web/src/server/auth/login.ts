@@ -39,9 +39,6 @@ export async function authorize(
     return null;
   }
 
-  console.log(account.password);
-  console.log(data.password);
-
   const passwordVerification = await argon2.verify(
     account.password!,
     data.password
