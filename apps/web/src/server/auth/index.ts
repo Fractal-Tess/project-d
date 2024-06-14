@@ -7,16 +7,12 @@ import {
 import { type Adapter } from 'next-auth/adapters';
 import DiscordProvider from 'next-auth/providers/discord';
 import CredentialsProvider from 'next-auth/providers/credentials';
-import argon2 from 'argon2';
 
 import { env } from '$/env';
 import { db } from '$/server/db';
-import {
-  accounts,
-  sessions,
-  users,
-  verificationTokens
-} from '$/server/db/schema';
+import { accounts, users, verificationTokens } from '$/server/db/schema';
+import * as register from './register';
+import * as login from './login';
 
 /**
  * Module augmentation for `next-auth` types. Allows us to add custom properties to the `session`
@@ -45,21 +41,27 @@ declare module 'next-auth' {
  * @see https://next-auth.js.org/configuration/options
  */
 export const authOptions: NextAuthOptions = {
+  debug: env.NODE_ENV === 'development',
+  secret: env.NEXTAUTH_SECRET,
   callbacks: {
-    session: ({ session, user }) => ({
+    session: ({ session }) => ({
       ...session,
       user: {
-        ...session.user,
-        id: user.id
+        ...session.user
       }
     })
   },
   adapter: DrizzleAdapter(db, {
     usersTable: users,
     accountsTable: accounts,
-    sessionsTable: sessions,
     verificationTokensTable: verificationTokens
   }) as Adapter,
+  session: {
+    strategy: 'jwt',
+    // TODO: Make this into an environment variable
+    maxAge: 30 * 24 * 60 * 60, // 30 days
+    updateAge: 24 * 60 * 60 // 24 hours
+  },
   providers: [
     DiscordProvider({
       clientId: env.DISCORD_CLIENT_ID,
@@ -70,101 +72,18 @@ export const authOptions: NextAuthOptions = {
       name: 'Credentials',
       type: 'credentials',
       id: 'credentials-login',
-      credentials: {
-        email: { label: 'Username', type: 'text' },
-        password: { label: 'Password', type: 'password' }
-      },
-      authorize: async credentials => {
-        console.log('Login', credentials);
-        if (!credentials) return null;
-        const dbUser = await db.query.users.findFirst({
-          where: (users, { eq }) => eq(users.email, credentials.email),
-          with: {
-            accounts: true
-          }
-        });
-        if (!dbUser) {
-          console.log('User with this email does not exist in the database');
-          return null;
-        }
-
-        const account = dbUser.accounts.find(
-          account => account.provider === 'credentials'
-        );
-
-        if (!account) {
-          console.log('User with this email does not use credentials to login');
-          return null;
-        }
-
-        const passwordVerification = await argon2.verify(
-          account.password!,
-          credentials.password
-        );
-        if (!passwordVerification) {
-          console.log("The password doesn't match");
-          return null;
-        }
-
-        return {
-          id: dbUser.id,
-          email: dbUser.email,
-          image: dbUser.image,
-          name: dbUser.name
-        };
-      }
+      credentials: login.credentials,
+      authorize: login.authorize
     }),
 
     CredentialsProvider({
       name: 'Credentials',
       type: 'credentials',
       id: 'credentials-register',
-      credentials: {
-        email: { label: 'Email', type: 'email' },
-        username: { label: 'Username', type: 'text' },
-        password: { label: 'Password', type: 'password' }
-      },
-      authorize: async credentials => {
-        console.log('Register', credentials);
-        if (!credentials) return null;
-        const dbUser = await db.query.users.findFirst({
-          where: (users, { eq }) => eq(users.email, credentials.email),
-          with: {
-            accounts: true
-          }
-        });
-        if (dbUser) {
-          console.log('A user with this email already exists');
-          return null;
-        }
-
-        const passwordHash = await argon2.hash(credentials.password);
-        const id = crypto.randomUUID();
-        const userInsertResult = await db.insert(users).values({
-          id,
-          email: credentials.email,
-          name: credentials.username
-        });
-
-        await db.insert(accounts).values({
-          userId: id,
-          type: 'email',
-          provider: 'credentials',
-          providerAccountId: '',
-          password: passwordHash
-        });
-
-        console.log('User inserted', userInsertResult);
-
-        // TODO: Send a verification email
-
-        return {
-          id,
-          email: credentials.email,
-          name: credentials.username
-        };
-      }
+      credentials: register.credentials,
+      authorize: register.authorize
     })
+
     /**
      * ...add more providers here.
      *
@@ -188,3 +107,4 @@ export const authOptions: NextAuthOptions = {
  * @see https://next-auth.js.org/configuration/nextjs
  */
 export const getServerAuthSession = () => getServerSession(authOptions);
+export type Session = Awaited<ReturnType<typeof getServerAuthSession>>;

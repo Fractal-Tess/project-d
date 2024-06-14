@@ -4,7 +4,7 @@ import { zodResolver } from '@hookform/resolvers/zod';
 import { signIn } from 'next-auth/react';
 import { useForm } from 'react-hook-form';
 import type { z } from 'zod';
-import { loginSchema, loginValidator } from '$/server/auth/validators';
+import { schema, validator } from '$/schema/login';
 import { Button } from '@ui/components/ui/button';
 import {
   Form,
@@ -15,32 +15,43 @@ import {
   FormMessage
 } from '@ui/components/ui/form';
 import { Input } from '@ui/components/ui/input';
+import { useRouter, useSearchParams } from 'next/navigation';
 
 export default function ProfileForm() {
-  const form = useForm<z.infer<typeof loginValidator>>({
-    resolver: zodResolver(loginValidator),
+  const searchParams = useSearchParams();
+  const callBackURL = searchParams.get('callbackUrl');
+  const router = useRouter();
+
+  const form = useForm<z.infer<typeof validator>>({
+    resolver: zodResolver(validator),
     defaultValues: {
-      email: '',
-      password: ''
+      email: 'vgfractal@gmail.com',
+      password: '123123123'
     }
   });
 
-  async function onSubmit(values: z.infer<typeof loginValidator>) {
+  // TODO: Handle redirecting to specific callback URL
+  async function onSubmit(values: z.infer<typeof validator>) {
     const res = await signIn('credentials-login', {
-      ...values
+      ...values,
+      redirect: false
     });
-    //TODO: Handle errors and show them to the user
+    if (!res?.error) router.push(callBackURL ?? '/');
   }
 
   return (
-    <Form {...form}>
-      <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-4">
-        {Object.entries(loginSchema).map(
-          ([key, { type, placeholder }], idx) => (
+    <div className="flex flex-col items-center justify-center rounded-md border-2 border-black px-4 py-2 shadow-2xl dark:border-white">
+      <Form {...form}>
+        <Button onClick={() => signIn('discord')}>Discord</Button>
+        <form
+          onSubmit={form.handleSubmit(onSubmit)}
+          className="flex flex-col items-center gap-y-4"
+        >
+          {Object.entries(schema).map(([key, { type, placeholder }], idx) => (
             <FormField
               key={idx}
               control={form.control}
-              name={key as keyof typeof loginSchema}
+              name={key as keyof typeof schema}
               render={({
                 field
               }: {
@@ -59,10 +70,12 @@ export default function ProfileForm() {
                 </FormItem>
               )}
             />
-          )
-        )}
-        <Button type="submit">Submit</Button>
-      </form>
-    </Form>
+          ))}
+          <Button className="w-full" type="submit">
+            Submit
+          </Button>
+        </form>
+      </Form>
+    </div>
   );
 }
