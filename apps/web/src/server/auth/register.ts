@@ -4,6 +4,7 @@ import { type User } from 'next-auth';
 import { type InputCredentials, type ProviderCredentials } from '$/utils';
 import { type schema, validator } from '$/schema/register';
 import { accounts, users } from '$/server/db/schema';
+import { randomBytes } from 'crypto';
 
 export const credentials = {} as ProviderCredentials<typeof schema>;
 
@@ -37,13 +38,15 @@ export async function authorize(
     name: data.username
   });
 
+  console.log('Before');
   await db.insert(accounts).values({
     userId: id,
     type: 'email',
     provider: 'credentials',
-    providerAccountId: '',
+    providerAccountId: randomBytes(128).toString('hex'),
     password: passwordHash
   });
+  console.log('After');
 
   console.log('User inserted', userInsertResult);
 
