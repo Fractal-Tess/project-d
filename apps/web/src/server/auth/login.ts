@@ -48,6 +48,7 @@ export async function authorize(
     return null;
   }
 
+  console.log('Logged in user id is', dbUser.id);
   const user = {
     id: dbUser.id,
     email: dbUser.email,

@@ -44,12 +44,15 @@ export const authOptions: NextAuthOptions = {
   debug: env.NODE_ENV === 'development',
   secret: env.NEXTAUTH_SECRET,
   callbacks: {
-    session: ({ session }) => ({
-      ...session,
-      user: {
-        ...session.user
-      }
-    })
+    session: ({ session, token }) => {
+      return {
+        ...session,
+        user: {
+          ...session.user,
+          id: token.sub
+        }
+      };
+    }
   },
   adapter: DrizzleAdapter(db, {
     usersTable: users,
@@ -58,7 +61,7 @@ export const authOptions: NextAuthOptions = {
   }) as Adapter,
   session: {
     strategy: 'jwt',
-    // TODO: Make this into an environment variable
+    // TODO: Control this duration via an environment variable
     maxAge: 30 * 24 * 60 * 60, // 30 days
     updateAge: 24 * 60 * 60 // 24 hours
   },
@@ -96,7 +99,7 @@ export const authOptions: NextAuthOptions = {
   ],
   pages: {
     signIn: '/auth/login',
-    signOut: '/auth/signOut',
+    signOut: '/auth/logout',
     error: '/auth/error'
   }
 };

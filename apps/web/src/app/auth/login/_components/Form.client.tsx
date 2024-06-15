@@ -20,7 +20,6 @@ import { useSearchParams } from 'next/navigation';
 export default function ProfileForm() {
   const searchParams = useSearchParams();
   const callBackURL = searchParams.get('callbackUrl') ?? '/';
-
   const form = useForm<z.infer<typeof validator>>({
     resolver: zodResolver(validator),
     defaultValues: {
@@ -32,17 +31,17 @@ export default function ProfileForm() {
   async function onSubmit(values: z.infer<typeof validator>) {
     const res = await signIn('credentials-login', {
       ...values,
-      redirect: false,
+      redirect: true,
       callbackUrl: callBackURL
     });
 
-    if (!res?.error) window.location.href = callBackURL;
+    // TODO: Handle backend exceptions
   }
 
   return (
     <div className="flex flex-col items-center justify-center rounded-md border-2 border-black px-4 py-2 shadow-2xl dark:border-white">
+      <Button onClick={() => signIn('discord')}>Discord</Button>
       <Form {...form}>
-        <Button onClick={() => signIn('discord')}>Discord</Button>
         <form
           onSubmit={form.handleSubmit(onSubmit)}
           className="flex flex-col items-center gap-y-4"

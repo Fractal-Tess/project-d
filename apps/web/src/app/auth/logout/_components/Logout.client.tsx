@@ -9,7 +9,7 @@ export default function SignOutButton() {
   const callbackUrl = params.get('callbackUrl') ?? '/';
   return (
     <Button onClick={() => signOut({ callbackUrl, redirect: true })}>
-      Sign out
+      Logout
     </Button>
   );
 }

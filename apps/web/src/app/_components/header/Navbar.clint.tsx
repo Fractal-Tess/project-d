@@ -7,7 +7,7 @@ export function Navbar() {
   return (
     <Menu setActive={setActive}>
       <HoveredLink href="/">Landing</HoveredLink>
-      <HoveredLink href="/foo">Foo</HoveredLink>
+      <HoveredLink href="/protected">Protected Page</HoveredLink>
     </Menu>
   );
 }

@@ -1,6 +1,6 @@
 import { getServerAuthSession } from '$/server/auth';
 import { redirect } from 'next/navigation';
-import SignOutButton from './SignOut.client';
+import SignOutButton from './_components/Logout.client';
 
 type Props = {
   searchParams: {

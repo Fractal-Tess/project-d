@@ -1,7 +1,7 @@
 'use client';
 
 import { zodResolver } from '@hookform/resolvers/zod';
-import { signIn } from 'next-auth/react';
+import { signIn, useSession } from 'next-auth/react';
 import { useForm } from 'react-hook-form';
 import type { z } from 'zod';
 import { schema, validator } from '$/schema/register';
@@ -20,6 +20,7 @@ import { useSearchParams } from 'next/navigation';
 export default function ProfileForm() {
   const searchParams = useSearchParams();
   const callbackUrl = searchParams.get('callbackUrl') ?? '/';
+  const session = useSession();
   const form = useForm<z.infer<typeof validator>>({
     resolver: zodResolver(validator),
     defaultValues: {
@@ -31,16 +32,19 @@ export default function ProfileForm() {
 
   async function onSubmit(values: z.infer<typeof validator>) {
     const res = await signIn('credentials-register', {
-      ...values
+      ...values,
+      callbackUrl,
+      redirect: true
     });
 
     // TODO: Handle errors and show them to the user
 
-    if (!res?.error) window.location.href = callbackUrl;
+    if (!res?.error) await session.update(null);
   }
 
   return (
     <div className="flex flex-col items-center justify-center rounded-md border-2 border-black px-4 py-2 shadow-2xl dark:border-white">
+      <Button onClick={() => signIn('discord')}>Discord</Button>
       <Form {...form}>
         <form
           onSubmit={form.handleSubmit(onSubmit)}

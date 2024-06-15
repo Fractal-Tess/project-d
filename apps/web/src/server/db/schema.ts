@@ -34,6 +34,9 @@ export const posts = createTable(
     nameIndex: index('name_idx').on(example.name)
   })
 );
+export const postsRelations = relations(posts, ({ one }) => ({
+  user: one(users, { fields: [posts.createdById], references: [users.id] })
+}));
 
 export const users = createTable('user', {
   id: text('id', { length: 255 })
