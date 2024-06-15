@@ -15,12 +15,11 @@ import {
   FormMessage
 } from '@ui/components/ui/form';
 import { Input } from '@ui/components/ui/input';
-import { useRouter, useSearchParams } from 'next/navigation';
+import { useSearchParams } from 'next/navigation';
 
 export default function ProfileForm() {
   const searchParams = useSearchParams();
-  const callBackURL = searchParams.get('callbackUrl');
-  const router = useRouter();
+  const callBackURL = searchParams.get('callbackUrl') ?? '/';
 
   const form = useForm<z.infer<typeof validator>>({
     resolver: zodResolver(validator),
@@ -30,13 +29,14 @@ export default function ProfileForm() {
     }
   });
 
-  // TODO: Handle redirecting to specific callback URL
   async function onSubmit(values: z.infer<typeof validator>) {
     const res = await signIn('credentials-login', {
       ...values,
-      redirect: false
+      redirect: false,
+      callbackUrl: callBackURL
     });
-    if (!res?.error) router.push(callBackURL ?? '/');
+
+    if (!res?.error) window.location.href = callBackURL;
   }
 
   return (

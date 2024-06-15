@@ -2,11 +2,12 @@
 
 import { getServerAuthSession } from '$/server/auth';
 import { Navbar } from './Navbar';
-import { SignIn, SignOut, Register } from './Buttons';
 import { AvatarIcon } from './AvatarIcon';
+import { AuthLinks } from './AuthLinks';
 
 export async function Header() {
   const session = await getServerAuthSession();
+
   return (
     <div
       className={
@@ -17,15 +18,7 @@ export async function Header() {
 
       <div className="flex items-center justify-center gap-x-4">
         <AvatarIcon session={session} />
-
-        {session ? (
-          <SignOut />
-        ) : (
-          <>
-            <SignIn />
-            <Register />
-          </>
-        )}
+        <AuthLinks session={session} />
       </div>
     </div>
   );

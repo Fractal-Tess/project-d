@@ -40,8 +40,8 @@ export type RouterOutputs = inferRouterOutputs<AppRouter>;
 export function TRPCReactProvider({ children }: PropsWithChildren) {
   const queryClient = getQueryClient();
 
-  const [trpcClient] = useState(() =>
-    api.createClient({
+  const [trpcClient] = useState(() => {
+    return api.createClient({
       links: [
         loggerLink({
           enabled: op =>
@@ -58,8 +58,8 @@ export function TRPCReactProvider({ children }: PropsWithChildren) {
           }
         })
       ]
-    })
-  );
+    });
+  });
 
   return (
     <QueryClientProvider client={queryClient}>

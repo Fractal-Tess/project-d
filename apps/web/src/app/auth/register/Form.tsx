@@ -15,12 +15,16 @@ import {
   FormMessage
 } from '@ui/components/ui/form';
 import { Input } from '@ui/components/ui/input';
+import { useSearchParams } from 'next/navigation';
 
 export default function ProfileForm() {
+  const searchParams = useSearchParams();
+  const callbackUrl = searchParams.get('callbackUrl') ?? '/';
   const form = useForm<z.infer<typeof validator>>({
     resolver: zodResolver(validator),
     defaultValues: {
       email: '',
+      username: '',
       password: ''
     }
   });
@@ -29,7 +33,10 @@ export default function ProfileForm() {
     const res = await signIn('credentials-register', {
       ...values
     });
+
     // TODO: Handle errors and show them to the user
+
+    if (!res?.error) window.location.href = callbackUrl;
   }
 
   return (
