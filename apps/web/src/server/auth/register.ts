@@ -1,5 +1,5 @@
 import { db } from '../db/index';
-import argon2 from 'argon2';
+import argon2 from '@Node-rs/argon2';
 import { type User } from 'next-auth';
 import { type InputCredentials, type ProviderCredentials } from '$/utils';
 import { type schema, validator } from '$/schema/register';
@@ -30,7 +30,12 @@ export async function authorize(
     return null;
   }
 
-  const passwordHash = await argon2.hash(data.password);
+  const passwordHash = await argon2.hash(data.password, {
+    memoryCost: 4096,
+    timeCost: 3,
+    outputLen: 32,
+    parallelism: 1
+  });
   const id = crypto.randomUUID();
   const userInsertResult = await db.insert(users).values({
     id,
