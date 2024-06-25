@@ -1,4 +1,5 @@
 import { z } from 'zod';
+import { eq } from 'drizzle-orm';
 
 import {
   createTRPCRouter,
@@ -37,5 +38,13 @@ export const postRouter = createTRPCRouter({
 
   getSecretMessage: protectedProcedure.query(() => {
     return 'you can now see this secret message!';
+  }),
+
+  deletePost: protectedProcedure.input(z.object({
+    id: z.string()
+  })).mutation(async({ctx, input})=>{
+
+    await ctx.db.delete(posts).where(eq(posts.id, input.id))
+
   })
 });

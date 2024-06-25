@@ -1,5 +1,5 @@
 import { db } from '../db/index';
-import argon2 from '@Node-rs/argon2';
+import argon2 from '@node-rs/argon2';
 import { type User } from 'next-auth';
 import { type InputCredentials, type ProviderCredentials } from '$/utils';
 import { type schema, validator } from '$/schema/register';

@@ -1,6 +1,7 @@
 import { CreatePost } from '$/app/_components/create-post.client';
 import { getServerAuthSession } from '$/server/auth';
 import { api } from '$/trpc/server';
+import DeleteButton from './deleteButton';
 
 export default async function Home() {
   return (
@@ -24,12 +25,13 @@ async function CrudShowcase() {
     <div className="flex w-full max-w-xs flex-col gap-y-4 rounded-sm">
       <h2 className="text-center text-2xl font-bold">Posts</h2>
       <ul className="flex flex-col gap-y-4 rounded-md">
-        {latestPosts.map(({ user, name }, idx) => (
+        {latestPosts.map(({ user, name, id }, idx) => (
           <li
             key={idx}
             className="text-bold truncate rounded-md border-2 px-4 py-3 shadow-md"
           >
             <span>{user.name}</span>: <span>{name}</span>
+            <DeleteButton id={id.toString()} />
           </li>
         ))}
       </ul>
