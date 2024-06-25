@@ -31,7 +31,7 @@ async function CrudShowcase() {
             className="text-bold truncate rounded-md border-2 px-4 py-3 shadow-md"
           >
             <span>{user.name}</span>: <span>{name}</span>
-            <DeleteButton id={id.toString()} />
+            <DeleteButton id={id} />
           </li>
         ))}
       </ul>

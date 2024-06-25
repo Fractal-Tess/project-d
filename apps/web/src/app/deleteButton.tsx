@@ -1,18 +1,22 @@
 "use client"
 
-
 import { Button } from '@ui/components/ui/button'
 import React from 'react'
-import { api } from '$/trpc/server';
+import { api } from '$/trpc/react'
+import { useRouter } from 'next/navigation'
 
-export default function DeleteButton({ id }: { id: string }) {
+export default function DeleteButton({ id }: { id: number }) {
+  const mutation = api.post.deletePost.useMutation()
+  const router = useRouter()
 
-  async function deletePost(id: string) {
-    await api.post.deletePost({ id })
+  async function deletePost(id: number) {
+    await mutation.mutateAsync({ id })
+
+    router.refresh()
   }
 
   return (
-    <Button onClick={() => deletePost(id)}>X</Button>
+    <Button onClick={() => deletePost(id)} disabled={mutation.isPending}>X</Button>
   )
 }
 
