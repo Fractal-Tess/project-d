@@ -1,0 +1,21 @@
+{
+  "name": "@repo/drizzle",
+  "version": "0.1.0",
+  "private": true,
+  "exports": {
+    "./schema": "./src/schema/index.ts",
+    "./client": "./src/client.ts"
+  },
+  "scripts": {
+    "generate": "drizzle-kit generate",
+    "migrate": "drizzle-kit migrate",
+    "push": "drizzle-kit push",
+    "studio": "drizzle-kit studio"
+  },
+  "dependencies": {
+    "dotenv": "^16.4.5",
+    "drizzle-kit": "^0.21.4",
+    "drizzle-orm": "^0.30.10",
+    "zod": "^3.23.3"
+  }
+}
