@@ -2,6 +2,12 @@
   "name": "@repo/typescript-config",
   "version": "0.1.0",
   "private": true,
+  "scripts": {
+    "preinstall": "node ../package-inherit/dist/package-inherit-cli.js update"
+  },
+  "inherits": [
+    "@repo/tools/package.typescript.json"
+  ],
   "dependencies": {
     "typescript": "^5.5.2"
   }
