@@ -1,10 +1,5 @@
 import { relations } from 'drizzle-orm';
-import {
-  index,
-  primaryKey,
-  sqliteTable,
-  text
-} from 'drizzle-orm/sqlite-core';
+import { index, primaryKey, sqliteTable, text } from 'drizzle-orm/sqlite-core';
 import { user } from './user';
 
 export const account = sqliteTable(

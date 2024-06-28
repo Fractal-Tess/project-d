@@ -1,3 +1,4 @@
-export * from './user'
-export * from './session'
-export * from './account'
+// User related
+export * from './user/user';
+export * from './user/account';
+export * from './user/session';

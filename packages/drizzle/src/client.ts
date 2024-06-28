@@ -1,23 +1,24 @@
-import { createClient, type Client } from '@libsql/client';
+import { createClient as libsqlClient } from '@libsql/client';
 import { drizzle } from 'drizzle-orm/libsql';
 
-import { env } from '$/env';
 import * as schema from './schema';
 
-/**
- * Cache the database connection in development. This avoids creating a new connection on every HMR
- * update.
- */
-const globalForDb = globalThis as unknown as {
-  client: Client | undefined;
-};
-
-export const client =
-  globalForDb.client ??
-  createClient({
-    url: env.TURSO_CONNECTION_URL,
-    authToken: env.TURSO_AUTH_TOKEN
+export function createClient({
+  url,
+  authToken
+}: {
+  url: string;
+  authToken: string;
+}) {
+  const client = libsqlClient({
+    url,
+    authToken
   });
-if (env.NODE_ENV !== 'production') globalForDb.client = client;
 
-export const db = drizzle(client, { schema });
+  const db = drizzle(client, { schema });
+
+  return {
+    client,
+    db
+  };
+}
