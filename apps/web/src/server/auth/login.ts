@@ -31,7 +31,7 @@ export async function authorize(
   }
 
   const account = dbUser.accounts.find(
-    account => account.provider === 'credentials'
+    (account) => account.provider === 'credentials'
   );
 
   if (!account) {

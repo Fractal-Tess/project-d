@@ -40,9 +40,13 @@ export const postRouter = createTRPCRouter({
     return 'you can now see this secret message!';
   }),
 
-  deletePost: protectedProcedure.input(z.object({
-    id: z.number()
-  })).mutation(async({ctx, input})=>{
-    await ctx.db.delete(posts).where(eq(posts.id, input.id))
-  })
+  deletePost: protectedProcedure
+    .input(
+      z.object({
+        id: z.number()
+      })
+    )
+    .mutation(async ({ ctx, input }) => {
+      await ctx.db.delete(posts).where(eq(posts.id, input.id));
+    })
 });

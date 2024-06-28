@@ -6,7 +6,5 @@ import type { PropsWithChildren } from 'react';
 type Props = PropsWithChildren;
 
 export function Providers({ children }: Props) {
-  return (
-    <TRPCReactProvider>{children}</TRPCReactProvider>
-  );
+  return <TRPCReactProvider>{children}</TRPCReactProvider>;
 }

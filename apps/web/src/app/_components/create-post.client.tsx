@@ -20,7 +20,7 @@ export function CreatePost() {
 
   return (
     <form
-      onSubmit={e => {
+      onSubmit={(e) => {
         e.preventDefault();
         createPost.mutate({ name });
       }}
@@ -30,7 +30,7 @@ export function CreatePost() {
         type="text"
         placeholder="Title"
         value={name}
-        onChange={e => setName(e.target.value)}
+        onChange={(e) => setName(e.target.value)}
       />
       <Button type="submit" disabled={createPost.isPending}>
         {createPost.isPending ? 'Submitting...' : 'Submit'}

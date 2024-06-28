@@ -14,7 +14,7 @@ import { type AdapterAccount } from 'next-auth/adapters';
  *
  * @see https://orm.drizzle.team/docs/goodies#multi-project-schema
  */
-export const createTable = sqliteTableCreator(name => `web_${name}`);
+export const createTable = sqliteTableCreator((name) => `web_${name}`);
 
 export const posts = createTable(
   'post',
@@ -29,7 +29,7 @@ export const posts = createTable(
       .notNull(),
     updatedAt: int('updatedAt', { mode: 'timestamp' })
   },
-  example => ({
+  (example) => ({
     createdByIdIdx: index('createdById_idx').on(example.createdById),
     nameIndex: index('name_idx').on(example.name)
   })
@@ -77,7 +77,7 @@ export const accounts = createTable(
     id_token: text('id_token'),
     session_state: text('session_state', { length: 255 })
   },
-  account => ({
+  (account) => ({
     compoundKey: primaryKey({
       columns: [account.provider, account.providerAccountId]
     }),
@@ -95,7 +95,7 @@ export const verificationTokens = createTable(
     token: text('token', { length: 255 }).notNull(),
     expires: int('expires', { mode: 'timestamp' }).notNull()
   },
-  vt => ({
+  (vt) => ({
     compoundKey: primaryKey({ columns: [vt.identifier, vt.token] })
   })
 );

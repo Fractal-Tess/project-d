@@ -10,7 +10,7 @@ export function AvatarIcon() {
       <AvatarFallback className="text-sm">
         {session?.data?.user?.name
           ?.split(' ')
-          .map(token => token.charAt(0).toUpperCase()) ?? 'NULL'}
+          .map((token) => token.charAt(0).toUpperCase()) ?? 'NULL'}
       </AvatarFallback>
     </Avatar>
   );
