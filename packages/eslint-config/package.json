@@ -2,6 +2,7 @@
   "name": "@repo/eslint-config",
   "version": "0.1.0",
   "private": true,
+  "type": "commonjs",
   "files": [
     "library.js",
     "next.js",
@@ -14,8 +15,8 @@
     "eslint-plugin-only-warn": "^1.1.0",
     "eslint-plugin-drizzle": "^0.2.3",
     "eslint": "^8.56.0",
-    "@typescript-eslint/eslint-plugin": "^7.13.0",
-    "@typescript-eslint/parser": "^7.13.0",
+    "@typescript-eslint/eslint-plugin": "^7.14.1",
+    "@typescript-eslint/parser": "^7.14.1",
     "eslint-config-next": "^14.2.4"
   }
 }
