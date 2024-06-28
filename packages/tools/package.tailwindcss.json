@@ -1,0 +1,11 @@
+{
+  "dependencies": {
+    "tailwindcss": "^3.4.4",
+    "autoprefixer": "^10.4.19",
+    "postcss": "^8.4.33",
+    "tailwind-merge": "^2.3.0",
+    "tailwindcss-animate": "^1.0.7",
+    "clsx": "^2.1.1",
+    "class-variance-authority": "^0.7.0"
+  }
+}

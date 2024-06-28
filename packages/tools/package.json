@@ -1,0 +1,10 @@
+{
+  "name": "@repo/tools",
+  "version": "0.1.0",
+  "files": [
+    "package.next.json",
+    "package.react.json",
+    "package.tailwindcss.json",
+    "package.typescript.json"
+  ]
+}
