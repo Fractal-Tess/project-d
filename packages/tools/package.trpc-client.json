@@ -1,0 +1,6 @@
+{
+  "dependencies": {
+    "@trpc/client": "11.0.0-rc.364",
+    "superjson": "^2.2.1"
+  }
+}
