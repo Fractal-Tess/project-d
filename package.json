@@ -2,6 +2,7 @@
   "name": "project-d",
   "private": true,
   "scripts": {
+    "preinstall": "node ./packages/package-inherit/dist/package-inherit-cli.js update",
     "build": "turbo build",
     "dev": "turbo dev",
     "lint": "turbo lint",
@@ -10,8 +11,7 @@
   "devDependencies": {
     "prettier": "^3.3.2",
     "prettier-plugin-tailwindcss": "^0.6.4",
-    "turbo": "2.0.3",
-    "typescript": "^5.4.5"
+    "turbo": "2.0.3"
   },
   "packageManager": "pnpm@9.0.5",
   "engineStrict": true,
