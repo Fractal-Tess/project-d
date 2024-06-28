@@ -20,6 +20,9 @@ importers:
 
   apps/anotator:
     dependencies:
+      '@libsql/client':
+        specifier: ^0.6.0
+        version: 0.6.2
       '@repo/drizzle':
         specifier: workspace:*
         version: link:../../packages/drizzle

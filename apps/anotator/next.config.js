@@ -6,7 +6,7 @@ await import('./src/env.js');
 
 /** @type {import("next").NextConfig} */
 const config = {
-  transpilePackages: ['@repo/ui'],
+  transpilePackages: ['@repo/ui','@repo/drizzle'],
   experimental: {
     serverComponentsExternalPackages: ['@node-rs/argon2']
   }
