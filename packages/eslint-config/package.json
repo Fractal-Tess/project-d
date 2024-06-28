@@ -1,6 +1,6 @@
 {
   "name": "@repo/eslint-config",
-  "version": "0.0.0",
+  "version": "0.1.0",
   "private": true,
   "files": [
     "library.js",
@@ -14,7 +14,6 @@
     "eslint-plugin-only-warn": "^1.1.0",
     "eslint-plugin-drizzle": "^0.2.3",
     "eslint": "^8.56.0",
-    "typescript": "^5.4.5",
     "@typescript-eslint/eslint-plugin": "^7.13.0",
     "@typescript-eslint/parser": "^7.13.0",
     "eslint-config-next": "^14.2.4"
