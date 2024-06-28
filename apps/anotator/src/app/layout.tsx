@@ -18,7 +18,7 @@ export default async function RootLayout({ children }: PropsWithChildren) {
     >
       <body className="flex min-h-[100svh] flex-col items-center justify-center">
         <Providers>
-          <main className="container mx-auto">{children}</main>
+          <main className="">{children}</main>
         </Providers>
       </body>
     </html>
