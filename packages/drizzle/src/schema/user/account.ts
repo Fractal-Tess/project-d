@@ -15,7 +15,7 @@ export const account = sqliteTable(
     refreshToken: text('refresh_token'),
     accessToken: text('access_token')
   },
-  account => ({
+  (account) => ({
     compoundKey: primaryKey({
       columns: [account.provider, account.providerAccountId]
     }),
