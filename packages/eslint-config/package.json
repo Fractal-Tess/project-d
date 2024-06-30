@@ -8,7 +8,7 @@
     "next.js",
     "react-internal.js"
   ],
-  "devDependencies": {
+  "dependencies": {
     "@vercel/style-guide": "^6.0.0",
     "eslint-config-turbo": "^2.0.3",
     "eslint-config-prettier": "^9.1.0",
